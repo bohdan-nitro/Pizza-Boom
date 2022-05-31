@@ -1,14 +1,17 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import cartEmptyImage from '../assets/img/empty-cart.png';
 import { CartItem, Button } from '../components';
 import { clearCart, removeCartItem, plusCartItem, minusCartItem } from '../redux/actions/cart';
+import {element} from "prop-types";
 
 function Cart() {
     const dispatch = useDispatch();
     const { totalPrice, totalCount, items } = useSelector(({ cart }) => cart);
+
+    const [open, setOpen] = useState(false)
 
     const addedPizzas = Object.keys(items).map((key) => {
         return items[key].items[0];
@@ -34,9 +37,39 @@ function Cart() {
         dispatch(minusCartItem(id));
     };
 
+    const Test = ({name}) => {
+        return (
+            <>
+
+                <div className="order-box">
+                    <div className={"title-container"}>
+                        <h3>Ваш заказ</h3>
+                    </div>
+                    <div>
+                        {name}
+                    </div>
+                </div>
+            </>
+        )
+    }
+
+    const orderValues = Object.values(items).map(item => item.items);
+
+    const filteredOrder = orderValues.map((item, i) => {
+        return item[0]
+    })
+
+    console.log(filteredOrder.map(elem => elem.name))
+
     const onClickOrder = () => {
         console.log('ВАШ ЗАКАЗ', items);
+        if (items){
+            setOpen(!open)
+        }
+
     };
+
+
 
     return (
         <div className="content">
@@ -141,7 +174,7 @@ function Cart() {
                 </span>
                             </div>
                             <div className="cart__bottom-buttons">
-                                <a href="/" className="button button--outline button--add go-back-btn">
+                                <Link to={"/"} className="button button--outline button--add go-back-btn">
                                     <svg
                                         width="8"
                                         height="14"
@@ -156,14 +189,19 @@ function Cart() {
                                             strokeLinejoin="round"
                                         />
                                     </svg>
-                                    <Link to="/">
+                                    <Link to={"/"}>
                                         <span>Вернуться назад</span>
                                     </Link>
-                                </a>
+                                </Link>
                                 <Button onClick={onClickOrder} className="pay-btn">
                                     <span>Оплатить сейчас</span>
                                 </Button>
                             </div>
+                        </div>
+                        <div>
+                            {open ? filteredOrder.map(elem => {
+                                return <Test name={elem.name}/>
+                            }) : null}
                         </div>
                     </div>
                 ) : (
@@ -177,7 +215,7 @@ function Cart() {
                             Для того, чтобы заказать пиццу, перейди на главную страницу.
                         </p>
                         <img src={cartEmptyImage} alt="Empty cart" />
-                        <Link to="/" className="button button--black">
+                        <Link to={"/"} className="button button--black">
                             <span>Вернуться назад</span>
                         </Link>
                     </div>

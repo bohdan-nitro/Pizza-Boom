@@ -311,3 +311,28 @@ body {
     }
   }
 }
+
+.order-box{
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #7b7b7b;
+  background-color: #181818;
+  color: #fff;
+  padding: 15px;
+  width: 100%;
+  max-width: 500px;
+  justify-content: center;
+  margin: 0 auto;
+  transition: all 0.3s linear;
+
+  .title-container{
+    display: flex;
+    justify-content: center;
+    padding-bottom: 20px;
+    h3{
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 26px;
+    }
+  }
+}

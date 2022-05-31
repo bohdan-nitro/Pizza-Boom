@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 
 import logoSvg from "../assets/img/pizza-logo.svg";
 import Button from "./button";
+import Search from "./Search";
 
 
 
@@ -24,6 +25,8 @@ function Header() {
                         </div>
                     </div>
                 </Link>
+
+                <Search/>
                 <div className="header__cart">
                     <Link to={"/cart"}>
                         <Button className={"button--cart"}>
